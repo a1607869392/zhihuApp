@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_banner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_apple"
+
+            />
+
+        <TextView
+            android:id="@+id/text_banner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:text="hello,world" />
+
+        <TextView
+        android:id="@+id/writer_banner"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+            android:textSize="15sp"
+        android:layout_gravity="bottom"
+            android:gravity="bottom|left"
+
+        android:text="jack"/>
+    </FrameLayout>
+
+</LinearLayout>
