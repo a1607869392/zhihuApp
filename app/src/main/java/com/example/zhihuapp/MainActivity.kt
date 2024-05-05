@@ -45,13 +45,7 @@ class MainActivity : AppCompatActivity() {
             }
              true
         }
-//    class MyHandler : Handler(){
-//    override fun handleMessage(msg: Message) {
-//        super.handleMessage(msg)
-//    var respondseData :String=msg.obj.toString()
-//    setText(dscodeJson(respondseData))
-//    }
-//    }
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
