@@ -8,7 +8,8 @@
         android:id="@+id/date"
         android:layout_width="50dp"
         android:layout_height="40dp"
-        android:text="date" />
+android:textSize="10dp"
+        android:text="5月12日" />
 
     <TextView
         android:layout_width="match_parent"

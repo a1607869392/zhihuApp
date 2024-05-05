@@ -27,6 +27,7 @@ class BannerAdapter(var bannerList: List<NewBean.TopStoriesDTO>):RecyclerView.Ad
         this.bannerList=listdate
         //用于通知适配器数据集已更改的方法
         notifyDataSetChanged()}
+
     fun setActivity(activity: Activity){
         this.mactivity=activity
         //用于通知适配器数据集已更改的方法
@@ -57,7 +58,7 @@ class BannerAdapter(var bannerList: List<NewBean.TopStoriesDTO>):RecyclerView.Ad
             holder.bannersWriter.text=banners.hint
         }
         if (banners!=null){
-            mactivity?.let { Glide.with(it).load(banners.image).into(holder.bannersImage) }
+             Glide.with(holder.itemView.context).load(banners.image).into(holder.bannersImage)
         }
 
     }

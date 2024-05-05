@@ -1,7 +1,4 @@
 package com.example.zhihuapp
-
-
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +7,6 @@ import android.os.Message
 import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.Text
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,20 +57,12 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }}
-//    class MyHandler : Handler(){
-//    override fun handleMessage(msg: Message) {
-//        super.handleMessage(msg)
-//    var respondseData :String=msg.obj.toString()
-//    setText(dscodeJson(respondseData))
-//    }
-//    }
 
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     supportActionBar?.hide()
-    getNews()
     getNews()
     banner_adapter.setOnItemClickListener2(object : BannerAdapter.TopOnItemClickListener2 {
         override fun toponItemClick2(newsdetail: NewBean.TopStoriesDTO?, position: Int) {
@@ -83,12 +71,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
             startActivity(intent)
         }
     })
-
-
-
-
-
-
     newsAdapter.setOnItemClickListener(object : NewsAdapter.OnItemClickListener {
 
         override fun onItemClick(newsdetail: NewBean.StoriesDTO?, position: Int) {
@@ -96,25 +78,18 @@ override fun onCreate(savedInstanceState: Bundle?) {
             intent.putExtra("newsdetail",newsdetail)
             startActivity(intent)
         }
-
-
-
-
     })
     val layoutManager=LinearLayoutManager(this)
     val banner_layoutManager=LinearLayoutManager(this)
     banner_layoutManager.orientation=LinearLayoutManager.HORIZONTAL
+    getNews()
     val recyclerView=findViewById<RecyclerView>(R.id.recyclerView)
     val banner_recyclerView=findViewById<RecyclerView>(R.id.banner)
     recyclerView.layoutManager=layoutManager
     banner_recyclerView.layoutManager=banner_layoutManager
-    val banner_adapter= BannerAdapter(bannersList)
     getNews()
     banner_recyclerView.adapter=banner_adapter
-    getNews()
     recyclerView.adapter=newsAdapter
-
-
 }
 
 

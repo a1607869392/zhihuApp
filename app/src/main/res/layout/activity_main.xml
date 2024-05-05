@@ -9,8 +9,8 @@
 
     tools:context=".MainActivity">
 
-    <include layout="@layout/top_layout"/>-->
-   <include layout="@layout/banner"/>-->
+    <include layout="@layout/top_layout"/>
+   <include layout="@layout/banner"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

@@ -65,7 +65,7 @@ class NewsAdapter(var NewsList: List<NewBean.StoriesDTO>?):RecyclerView.Adapter<
         }
         //加载图片
         if (news != null) {
-            mactivity?.let { Glide.with(it).load(news.images).into(holder.newsImage) }
+              Glide.with(holder.itemView.context).load(news.images).into(holder.newsImage)
         }
            }
     interface OnItemClickListener  {
