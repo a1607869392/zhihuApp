@@ -29,7 +29,6 @@
             android:textSize="15sp"
         android:layout_gravity="bottom"
             android:gravity="bottom|left"
-
         android:text="jack"/>
     </FrameLayout>
 

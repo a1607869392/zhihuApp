@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zhihuapp.Banners
 import com.example.zhihuapp.R
@@ -31,6 +32,7 @@ class BannerAdapter(val bannerList: List<Banners>):RecyclerView.Adapter<BannerAd
         viewHolder.bannersImage.setOnClickListener {
             val position = viewHolder.adapterPosition
             val banners = bannerList[position]
+
             Toast.makeText(parent.context, "you clicked image ${banners.text}",
                 Toast.LENGTH_SHORT).show()
         }
