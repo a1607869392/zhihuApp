@@ -78,7 +78,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     getNews()
     banner_adapter.setOnItemClickListener2(object : BannerAdapter.TopOnItemClickListener2 {
         override fun toponItemClick2(newsdetail: NewBean.TopStoriesDTO?, position: Int) {
-            intent=Intent(this@MainActivity,MainActivity2::class.java)
+            intent=Intent(this@MainActivity,MainActivity3::class.java)
             intent.putExtra("newsdetail2",newsdetail)
             startActivity(intent)
         }
