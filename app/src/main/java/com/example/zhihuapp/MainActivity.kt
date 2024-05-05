@@ -1,7 +1,7 @@
 package com.example.zhihuapp
 
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,7 +9,6 @@ import android.os.Message
 import android.util.Log
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.Text
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,34 +16,40 @@ import com.example.zhihuapp.Adapter.BannerAdapter
 import com.example.zhihuapp.Adapter.NewsAdapter
 import com.example.zhihuapp.Bean.NewBean
 import com.google.gson.Gson
-import kotlin.math.log
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    private val url:String="https://news-at.zhihu.com/api/4/news/latest"
-    private val bannersList=ArrayList<Banners>()
+    private val urls:String="https://news-at.zhihu.com/api/4/news/latest"
     private val newsList=ArrayList<NewBean.StoriesDTO>()
+    private val bannersList=ArrayList<NewBean.TopStoriesDTO>()
     var newsAdapter =  NewsAdapter(newsList)
-    val util: Util = Util()
+    val banner_adapter= BannerAdapter(bannersList)
 
     private val mHandler = object :Handler(Looper.myLooper()!!) {
         override fun handleMessage(msg: Message) {
 
-            Log.d("fas", "-----主线程收到了数据------+$msg")
+
             super.handleMessage(msg)
             if (msg.what == 100) {
                 var mnews: String = msg.obj as String
                 //记录主线程收没收到
                 Log.d("fas", "-----主线程收到了数据------+$mnews")
                 var newBean: NewBean = Gson().fromJson(mnews, NewBean::class.java)
-                if (newBean != null) {
-                    newBean.stories?.let { newsAdapter.setListData(it) }
-                } else {
-                    Log.d("fas", "获取数据失败")
+                Log.d("fas", "-----转化数据------"+newBean)
+                newsAdapter.setActivity(this@MainActivity)
+                newBean.top_stories?.let {banner_adapter.setListData(it)  }
+                newBean.stories?.let { newsAdapter.setListData(it)
                 }
+
             }
              true
-        }
+        }}
 //    class MyHandler : Handler(){
 //    override fun handleMessage(msg: Message) {
 //        super.handleMessage(msg)
@@ -52,13 +57,37 @@ class MainActivity : AppCompatActivity() {
 //    setText(dscodeJson(respondseData))
 //    }
 //    }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
-//        getNews()
-        initBanners()
+      getNews()
+        banner_adapter.setOnItemClickListener2(object : BannerAdapter.TopOnItemClickListener2 {
+            override fun toponItemClick2(newsdetail: NewBean.TopStoriesDTO?, position: Int) {
+                intent=Intent(this@MainActivity,MainActivity2::class.java)
+                intent.putExtra("newsdetail2",newsdetail)
+                startActivity(intent)
+            }
+        })
+
+
+
+
+
+
+        newsAdapter.setOnItemClickListener(object : NewsAdapter.OnItemClickListener {
+
+            override fun onItemClick(newsdetail: NewBean.StoriesDTO?, position: Int) {
+                intent=Intent(this@MainActivity,MainActivity2::class.java)
+                intent.putExtra("newsdetail",newsdetail)
+                startActivity(intent)
+            }
+
+
+
+
+        })
         val layoutManager=LinearLayoutManager(this)
         val banner_layoutManager=LinearLayoutManager(this)
         banner_layoutManager.orientation=LinearLayoutManager.HORIZONTAL
@@ -66,37 +95,45 @@ class MainActivity : AppCompatActivity() {
         val banner_recyclerView=findViewById<RecyclerView>(R.id.banner)
         recyclerView.layoutManager=layoutManager
         banner_recyclerView.layoutManager=banner_layoutManager
-       val banner_adapter= BannerAdapter(bannersList)
+        getNews()
         banner_recyclerView.adapter=banner_adapter
-       getNews()
         recyclerView.adapter=newsAdapter
 
 
     }
 
-    private fun initBanners() { repeat(2){
-        bannersList.add(Banners(R.drawable.ic_apple,"jack","发现苹果"))
-        bannersList.add(Banners(R.drawable.ic_banna,"Alen","发现巨人"))
-    }
 
-
-    }
 
 
 
 fun getNews() {
     Thread {
+        val client=OkHttpClient()
+        val request=Request.Builder().url(urls).build()
+        client.newCall(request).enqueue(object:Callback{
+            override fun onFailure(call: Call, e: IOException) {
+            e.printStackTrace()
+            }
 
-//请求网络
-        var news:String =util.doGet(url)
-//传数据给主线程
-        var message:Message = Message.obtain()
-        message.what = 100
-        message.obj =news
-        Log.d("fas", "收到"+news)
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful){
+                    val responseBody= response.body?.string()
 
-        mHandler.sendMessage(message)
-        Log.d("fas", "发送请求")
+                   // Log.d("fas","收到数据"+responseBody)
+                    var message:Message = Message.obtain()
+                    message.what = 100
+                    message.obj =responseBody
+
+                    mHandler.sendMessage(message)
+
+
+                }
+            }
+
+        })
+
+
+
     }.start()
 }
 

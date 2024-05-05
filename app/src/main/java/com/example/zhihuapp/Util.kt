@@ -1,6 +1,7 @@
 package com.example.zhihuapp
 
 import android.annotation.SuppressLint
+import android.util.Log
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -27,6 +28,7 @@ class Util {
            var line:String=""
            while ( bufferedReader.readLine() != null) {
                line=bufferedReader.readLine()
+               Log.d("fas","数据"+line)
                stringBuilder.append(line);
 
            }
