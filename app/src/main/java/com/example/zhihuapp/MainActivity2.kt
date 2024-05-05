@@ -18,14 +18,15 @@ class MainActivity2 : AppCompatActivity() {
                 super.onCreate(savedInstanceState)
                 supportActionBar?.hide()
                 var webview:WebView=findViewById(R.id.webView)
+
                 val stories=intent.getSerializableExtra("newsdetail")as NewBean.StoriesDTO
-                val stories2=intent.getSerializableExtra("newsdetail2")as NewBean.TopStoriesDTO
+            //   val stories2=intent.getSerializableExtra("newsdetail2")as NewBean.TopStoriesDTO
 
           Log.d("FAS","收"+stories)
-       if (stories2==null){
-        webview.loadUrl(stories.url)}
-      else {
-           webview.loadUrl(stories2.url)
-       }
+//       if (stories2==null){
+//        webview.loadUrl(stories.url)}
+//      else {
+           webview.loadUrl(stories.url)
+//       }
     }
 }
