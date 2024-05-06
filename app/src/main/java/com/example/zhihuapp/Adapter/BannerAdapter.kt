@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.zhihuapp.Bean.NewBean
 import com.example.zhihuapp.R
 
-class BannerAdapter(var bannerList: List<NewBean.TopStoriesDTO>):RecyclerView.Adapter<BannerAdapter.ViewHolder>() {
+class BannerAdapter(var bannerList: List<NewBean.TopStoriesDTO>?):RecyclerView.Adapter<BannerAdapter.ViewHolder>() {
     private var monItemClickListener2: TopOnItemClickListener2? = null
     fun setOnItemClickListener2(onItemClickListener2: TopOnItemClickListener2) {
         this.monItemClickListener2 = onItemClickListener2
@@ -46,7 +46,7 @@ class BannerAdapter(var bannerList: List<NewBean.TopStoriesDTO>):RecyclerView.Ad
         return viewHolder
     }
 
-    override fun getItemCount()=bannerList.size
+    override fun getItemCount()= bannerList?.size as Int
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val banners=bannerList?.get(position)

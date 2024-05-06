@@ -45,14 +45,10 @@ class MainActivity : AppCompatActivity() {
                 var newBean: NewBean = Gson().fromJson(mnews, NewBean::class.java)
                 if (newBean != null) {
                     newBean.stories?.let { newsAdapter.setListData(it) }
+                    newBean.top_stories?.let {banner_adapter.setListData(it)  }
                 } else {
                     Log.d("fas", "获取数据失败")
                     Log.d("fas", "-----转化数据------"+newBean)
-                    newsAdapter.setActivity(this@MainActivity)
-                    newBean.top_stories?.let {banner_adapter.setListData(it)  }
-                    newBean.stories?.let { newsAdapter.setListData(it)
-                    }
-
                 }
                 true
             }
@@ -87,7 +83,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
     val banner_recyclerView=findViewById<RecyclerView>(R.id.banner)
     recyclerView.layoutManager=layoutManager
     banner_recyclerView.layoutManager=banner_layoutManager
-    getNews()
     banner_recyclerView.adapter=banner_adapter
     recyclerView.adapter=newsAdapter
 }
