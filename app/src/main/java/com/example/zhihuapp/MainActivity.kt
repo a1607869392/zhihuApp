@@ -1,10 +1,16 @@
 package com.example.zhihuapp
+
+import com.example.zhihuapp.MainActivity2
+import com.example.zhihuapp.MainActivity3
+import com.example.zhihuapp.R
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.Log
+import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
 
@@ -29,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val newsList=ArrayList<NewBean.StoriesDTO>()
     private val bannersList=ArrayList<NewBean.TopStoriesDTO>()
     var newsAdapter =  NewsAdapter(newsList)
+    var date: TextView? =null
 
     val banner_adapter= BannerAdapter(bannersList)
 
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("fas", "-----主线程收到了数据------+$mnews")
                 var newBean: NewBean = Gson().fromJson(mnews, NewBean::class.java)
                 if (newBean != null) {
+                    date?.text  =newBean.date
                     newBean.stories?.let { newsAdapter.setListData(it) }
                     newBean.top_stories?.let {banner_adapter.setListData(it)  }
                 } else {
@@ -58,11 +66,12 @@ class MainActivity : AppCompatActivity() {
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
+    date=findViewById(R.id.date)
     supportActionBar?.hide()
     getNews()
     banner_adapter.setOnItemClickListener2(object : BannerAdapter.TopOnItemClickListener2 {
         override fun toponItemClick2(newsdetail: NewBean.TopStoriesDTO?, position: Int) {
-            intent=Intent(this@MainActivity,MainActivity3::class.java)
+            intent=Intent(this@MainActivity, MainActivity3::class.java)
             intent.putExtra("newsdetail2",newsdetail)
             startActivity(intent)
         }
@@ -70,7 +79,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     newsAdapter.setOnItemClickListener(object : NewsAdapter.OnItemClickListener {
 
         override fun onItemClick(newsdetail: NewBean.StoriesDTO?, position: Int) {
-            intent=Intent(this@MainActivity,MainActivity2::class.java)
+            intent=Intent(this@MainActivity, MainActivity2::class.java)
             intent.putExtra("newsdetail",newsdetail)
             startActivity(intent)
         }
