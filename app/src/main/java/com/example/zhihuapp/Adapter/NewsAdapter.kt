@@ -30,6 +30,11 @@ class NewsAdapter(var NewsList: List<NewBean.StoriesDTO>?):RecyclerView.Adapter<
         //用于通知适配器数据集已更改的方法
         notifyDataSetChanged()}
 //    } @SuppressLint("NotifyDataSetChanged")
+@SuppressLint("NotifyDataSetChanged")
+fun addListData(listdate: List<NewBean.StoriesDTO>){
+    this.NewsList = this.NewsList?.plus(listdate)
+    notifyDataSetChanged()
+    }
   fun setActivity(activity: Activity){
        this.mactivity=activity
         //用于通知适配器数据集已更改的方法
