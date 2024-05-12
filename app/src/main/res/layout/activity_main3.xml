@@ -9,7 +9,7 @@
     tools:context=".MainActivity3">
     <WebView
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="670dp"
         android:id="@+id/webView2"/>
 <TextView
     android:id="@+id/pinglun"
@@ -21,5 +21,9 @@
     android:layout_width="match_parent"
     android:layout_height="15dp"
     android:text="点赞数 5"/>
-
+<Button
+    android:id="@+id/button2"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:text="点击查看评论"/>
 </LinearLayout>

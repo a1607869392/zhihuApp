@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var swipeRefreshLayout: SwipeRefreshLayout
     var date: TextView? =null
     var datess:Int = 20230425
+    var dpage:Int = 7
 
     val banner_adapter= BannerAdapter(bannersList)
 
@@ -129,9 +130,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
             super.onScrolled(recyclerView, dx, dy)
             val layoutManager=recyclerView.layoutManager as LinearLayoutManager
             val lastVisibleItemPosition=layoutManager.findLastVisibleItemPosition()
-            if (lastVisibleItemPosition>=newsAdapter.itemCount-3&&currentpage<=10){
+            if (lastVisibleItemPosition>=newsAdapter.itemCount-dpage&&currentpage<=10){
                 currentpage++
                 datess--
+                dpage+=5
                 addnews(datess)
             }
 
